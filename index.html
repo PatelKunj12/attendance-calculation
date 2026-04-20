@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Attendance Calculator</title>
 
+<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -20,34 +21,32 @@ body {
   justify-content: center;
   align-items: center;
   background: linear-gradient(to bottom, #0b0b2b, #1b2735 70%, #090a0f);
-  padding: 15px;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-/* Responsive Container */
+/* Glassmorphism Card */
 .container {
-  width: 100%;
-  max-width: 400px;
-  padding: 25px;
-  border-radius: 15px;
-  text-align: center;
-
   backdrop-filter: blur(15px);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255,255,255,0.2);
+  padding: 30px;
+  width: 320px;
+  border-radius: 15px;
+  text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  animation: fadeIn 1s ease;
 }
 
 h2 {
   color: #fff;
   margin-bottom: 20px;
-  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 600;
 }
 
 /* Inputs */
 input {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   margin: 10px 0;
   border-radius: 8px;
   border: none;
@@ -65,69 +64,82 @@ input::placeholder {
 button {
   width: 100%;
   padding: 12px;
+  margin-top: 10px;
   border: none;
   border-radius: 8px;
   background: linear-gradient(45deg, #4facfe, #00f2fe);
   color: white;
+  font-size: 15px;
   cursor: pointer;
   transition: 0.3s;
-  font-size: 15px;
 }
 
 button:hover {
-  transform: scale(1.03);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0,255,255,0.6);
 }
 
-/* Result */
+/* Result Box */
 #result {
   margin-top: 15px;
+  font-size: 14px;
   color: #fff;
   padding: 10px;
   border-radius: 8px;
   background: rgba(0,0,0,0.3);
-  font-size: 14px;
 }
 
-/* Stars stay same */
+/* Fade Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stars Background */
 .stars {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-
-  background: transparent;
-}
-
-.stars::before {
-  content: "";
+  width: 1px;
+  height: 1px;
   position: absolute;
-  width: 2px;
-  height: 2px;
   background: white;
-  box-shadow:
-    5vw 10vh white, 15vw 20vh white, 25vw 30vh white,
-    35vw 40vh white, 45vw 50vh white, 55vw 60vh white,
-    65vw 70vh white, 75vw 80vh white, 85vw 30vh white,
-    95vw 60vh white, 10vw 80vh white, 20vw 90vh white;
-  animation: twinkle 5s infinite linear;
+  box-shadow: 2vw 5vh 2px white, 10vw 8vh 2px white, 20vw 15vh 1px white,
+              30vw 25vh 2px white, 40vw 10vh 1px white, 50vw 30vh 2px white,
+              60vw 20vh 1px white, 70vw 40vh 2px white, 80vw 15vh 1px white,
+              90vw 35vh 2px white;
+  animation: twinkle 6s infinite linear;
 }
+
 @keyframes twinkle {
   0%,100% {opacity: 0.8;}
   50% {opacity: 0.3;}
 }
 
-/* 📱 Extra small devices */
-@media (max-width: 400px) {
-  .container {
-    padding: 20px;
-  }
+/* Shooting Stars */
+.shooting-star {
+  position: absolute;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, white, transparent);
+  animation: shoot 3s infinite ease-in;
+}
 
-  input, button {
-    padding: 10px;
-    font-size: 13px;
+.shooting-star:nth-child(1) { top: 20%; left: -100px; }
+.shooting-star:nth-child(2) { top: 40%; left: -100px; animation-delay: 1s; }
+.shooting-star:nth-child(3) { top: 60%; left: -100px; animation-delay: 2s; }
+
+@keyframes shoot {
+  0% {
+    transform: translateX(0) rotate(25deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(120vw) translateY(50vh) rotate(25deg);
+    opacity: 0;
   }
 }
 </style>
@@ -136,6 +148,9 @@ button:hover {
 <body>
 
 <div class="stars"></div>
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
 
 <div class="container">
   <h2>📊 Attendance Calculator</h2>
@@ -150,7 +165,7 @@ button:hover {
 </div>
 
 <script>
-  function calculate() {
+function calculate() {
 
   var T = Number(document.getElementById("total").value);
   var A = Number(document.getElementById("attended").value);
@@ -158,59 +173,28 @@ button:hover {
 
   var result = document.getElementById("result");
 
-  console.log("------ Attendance Details ------");
-  console.log("Total Lectures:", T);
-  console.log("Attended Lectures:", A);
-  console.log("Required %:", P);
-
-  if (T <= 0 || A < 0 || P <= 0 || isNaN(T) || isNaN(A) || isNaN(P)) {
-    alert("⚠️ Please enter valid values!");
-    console.log("Invalid input!");
+  if (T <= 0 || A < 0 || P <= 0) {
     result.innerHTML = "⚠️ Enter valid values!";
     return;
   }
 
   var current = (A / T) * 100;
-  console.log("Current Attendance:", current.toFixed(2) + "%");
-
   var message = "";
 
   if (current >= P) {
     message = "😎 You are safe!";
-    console.log("Status: SAFE");
-    alert(message);
-
   } else {
+    var extra = 0;
 
-    var maxPossible = ((A + (T - A)) / (T + (T - A))) * 100;
-    console.log("Max Possible Attendance:", maxPossible.toFixed(2) + "%");
-
-    if (maxPossible < P) {
-      message = "😔 You can't reach required attendance. Better luck next time!";
-      console.log("Status: IMPOSSIBLE");
-      alert(message);
-
-    } else {
-      var extra = 0;
-
-      while ((A / T) * 100 < P) {
-        A++;
-        T++;
-        extra++;
-      }
-
-      message = "📚 You need to attend " + extra + " more lectures.";
-      console.log("Extra Lectures Needed:", extra);
-      console.log("Status: NEED MORE CLASSES");
-      alert(message);
+    while ((A / T) * 100 < P) {
+      A++;
+      T++;
+      extra++;
     }
+
+    message = "📚 Attend " + extra + " more lectures.";
   }
 
-  console.log("--------------------------------");
-
-  result.innerHTML =
-    "Current: " + current.toFixed(2) + "%<br>" + message;
-}
   result.innerHTML =
     "Current: " + current.toFixed(2) + "%<br>" + message;
 }
