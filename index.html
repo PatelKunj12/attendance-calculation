@@ -188,25 +188,36 @@ function calculate() {
     message = "😎 You are safe!";
   } else {
 
-  // Calculate max possible attendance
-  var maxPossible = ((A + (T - A)) / (T + (T - A))) * 100;
+  // Total lectures remaining
+  var remaining = T - A;
 
-  if (maxPossible < P) {
-    message = "😔 Better luck next time! You can't reach the required attendance.";
-    alert(message);
-    console.log("Status: NOT POSSIBLE");
+  // Final attendance if all remaining are attended
+  var finalAttendance = ((A + remaining) / (T + remaining)) * 100;
+
+  if (finalAttendance < P) {
+    message =
+      "😔 Better luck next time!<br><br>" +
+      "If you attend all remaining lectures:<br>" +
+      "Final Attendance = <b>" + finalAttendance.toFixed(2) + "%</b><br><br>" +
+      "❌ Still below required " + P + "%";
+
   } else {
-    var extra = 0;
 
-    while ((A / T) * 100 < P) {
-      A++;
-      T++;
+    var extra = 0;
+    var tempA = A;
+    var tempT = T;
+
+    while ((tempA / tempT) * 100 < P) {
+      tempA++;
+      tempT++;
       extra++;
     }
 
-    message = "📚 You need to attend " + extra + " more lectures.";
-    alert(message);
-    console.log("Extra Lectures Needed:", extra);
+    message =
+      "📚 You need to attend <b>" + extra + "</b> more lectures." 
+      //"Calculation:<br>" +
+      //"New Attendance = ( " + tempA + " / " + tempT + " ) × 100<br>" +
+      //"= <b>" + ((tempA / tempT) * 100).toFixed(2) + "%</b>";
   }
 }
 if (current >= P) {
