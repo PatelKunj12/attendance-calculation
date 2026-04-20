@@ -193,6 +193,22 @@ function calculate() {
       A++;
       T++;
       extra++;
+    } else {
+
+  // Maximum possible attendance (if you attend ALL future classes)
+  var maxPossible = (A / T) * 100;  // this stays same unless more classes happen
+
+  if (maxPossible < P) {
+    message = "😔 Better luck next time! You can't reach the required attendance.";
+    alert(message);
+    console.log("Status: NOT POSSIBLE");
+  } else {
+    var extra = 0;
+
+    while ((A / T) * 100 < P) {
+      A++;
+      T++;
+      extra++;
     }
 
     message = "📚 Attend " + extra + " more lectures.";
