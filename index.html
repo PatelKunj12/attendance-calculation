@@ -26,15 +26,18 @@ body {
 
 /* Glassmorphism Card */
 .container {
+  width: 100%;
+  max-width: 420px;   /* bigger on large screens */
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+
   backdrop-filter: blur(15px);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255,255,255,0.2);
-  padding: 30px;
-  width: 320px;
-  border-radius: 15px;
-  text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  animation: fadeIn 1s ease;
+
+  margin: 10px; /* space from edges on mobile */
 }
 
 h2 {
