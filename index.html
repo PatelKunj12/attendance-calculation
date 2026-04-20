@@ -187,6 +187,15 @@ function calculate() {
   if (current >= P) {
     message = "😎 You are safe!";
   } else {
+
+  // Calculate max possible attendance
+  var maxPossible = ((A + (T - A)) / (T + (T - A))) * 100;
+
+  if (maxPossible < P) {
+    message = "😔 Better luck next time! You can't reach the required attendance.";
+    alert(message);
+    console.log("Status: NOT POSSIBLE");
+  } else {
     var extra = 0;
 
     while ((A / T) * 100 < P) {
@@ -195,13 +204,11 @@ function calculate() {
       extra++;
     }
 
-    message = "📚 Attend " + extra + " more lectures.";
+    message = "📚 You need to attend " + extra + " more lectures.";
+    alert(message);
+    console.log("Extra Lectures Needed:", extra);
   }
-  document.querySelectorAll("input").forEach(input => {
-  input.addEventListener("input", () => {
-    document.getElementById("result").innerHTML = "";
-  });
-});
+}
 if (current >= P) {
   result.style.border = "1px solid #00ff99"; // green
 } else {
