@@ -150,7 +150,7 @@ button:hover {
 </div>
 
 <script>
-function calculate() {
+  function calculate() {
 
   var T = Number(document.getElementById("total").value);
   var A = Number(document.getElementById("attended").value);
@@ -158,23 +158,38 @@ function calculate() {
 
   var result = document.getElementById("result");
 
-  if (T <= 0 || A < 0 || P <= 0) {
+  console.log("------ Attendance Details ------");
+  console.log("Total Lectures:", T);
+  console.log("Attended Lectures:", A);
+  console.log("Required %:", P);
+
+  if (T <= 0 || A < 0 || P <= 0 || isNaN(T) || isNaN(A) || isNaN(P)) {
+    alert("⚠️ Please enter valid values!");
+    console.log("Invalid input!");
     result.innerHTML = "⚠️ Enter valid values!";
     return;
   }
 
   var current = (A / T) * 100;
+  console.log("Current Attendance:", current.toFixed(2) + "%");
+
   var message = "";
 
   if (current >= P) {
     message = "😎 You are safe!";
+    console.log("Status: SAFE");
+    alert(message);
+
   } else {
 
-    // Max possible attendance if you attend all remaining classes
     var maxPossible = ((A + (T - A)) / (T + (T - A))) * 100;
+    console.log("Max Possible Attendance:", maxPossible.toFixed(2) + "%");
 
     if (maxPossible < P) {
-      message = "😔 You can't reach the required attendance. Better luck next time!";
+      message = "😔 You can't reach required attendance. Better luck next time!";
+      console.log("Status: IMPOSSIBLE");
+      alert(message);
+
     } else {
       var extra = 0;
 
@@ -184,10 +199,18 @@ function calculate() {
         extra++;
       }
 
-      message = "📚 Attend " + extra + " more lectures.";
+      message = "📚 You need to attend " + extra + " more lectures.";
+      console.log("Extra Lectures Needed:", extra);
+      console.log("Status: NEED MORE CLASSES");
+      alert(message);
     }
   }
 
+  console.log("--------------------------------");
+
+  result.innerHTML =
+    "Current: " + current.toFixed(2) + "%<br>" + message;
+}
   result.innerHTML =
     "Current: " + current.toFixed(2) + "%<br>" + message;
 }
