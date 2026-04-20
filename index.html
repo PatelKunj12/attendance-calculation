@@ -1,212 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Attendance Calculator</title>
+<meta charset="UTF-8">
+<title>Attendance Calculator</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      margin-top: 50px;
-       min-height: 100vh;
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(to bottom, #0b0b2b, #1b2735 70%, #090a0f);
   overflow: hidden;
-    }
+}
 
-    .container {
-      background: rgb(108, 106, 106);
-      padding: 20px;
-      width: 300px;
-      margin: auto;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgb(248, 248, 248);
-    }
+.container {
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 30px;
+  width: 320px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
 
-    h2 {
-      margin-bottom: 15px;
-      color: white
-    }
+h2 {
+  color: #fff;
+  margin-bottom: 20px;
+}
 
-    input {
-      width: 90%;
-      padding: 8px;
-      margin: 8px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
 
-    button {
-      padding: 10px 20px;
-      background-color: blue;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+input::placeholder {
+  color: #ccc;
+}
 
-    button:hover {
-      background-color: darkblue;
-    }
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    #result {
-      margin-top: 15px;
-      font-weight: bold;
-      color: white;
-    }
-    .stars {
+button:hover {
+  transform: scale(1.05);
+}
+
+#result {
+  margin-top: 15px;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.3);
+}
+
+/* Stars */
+.stars {
   width: 1px;
   height: 1px;
   position: absolute;
   background: white;
-  box-shadow: 2vw 5vh 2px white, 10vw 8vh 2px white, 15vw 15vh 1px white,
-    22vw 22vh 1px white, 28vw 12vh 2px white, 32vw 32vh 1px white,
-    38vw 18vh 2px white, 42vw 35vh 1px white, 48vw 25vh 2px white,
-    53vw 42vh 1px white, 58vw 15vh 2px white, 63vw 38vh 1px white,
-    68vw 28vh 2px white, 73vw 45vh 1px white, 78vw 32vh 2px white,
-    83vw 48vh 1px white, 88vw 20vh 2px white, 93vw 52vh 1px white,
-    98vw 35vh 2px white, 5vw 60vh 1px white, 12vw 65vh 2px white,
-    18vw 72vh 1px white, 25vw 78vh 2px white, 30vw 85vh 1px white,
-    35vw 68vh 2px white, 40vw 82vh 1px white, 45vw 92vh 2px white,
-    50vw 75vh 1px white, 55vw 88vh 2px white, 60vw 95vh 1px white,
-    65vw 72vh 2px white, 70vw 85vh 1px white, 75vw 78vh 2px white,
-    80vw 92vh 1px white, 85vw 82vh 2px white, 90vw 88vh 1px white,
-    95vw 75vh 2px white;
-  animation: twinkle 8s infinite linear;
-}
-
-.shooting-star {
-  position: absolute;
-  width: 100px;
-  height: 2px;
-  background: linear-gradient(90deg, white, transparent);
-  animation: shoot 3s infinite ease-in;
-}
-
-.shooting-star:nth-child(1) {
-  top: 20%;
-  left: -100px;
-  animation-delay: 0s;
-}
-
-.shooting-star:nth-child(2) {
-  top: 35%;
-  left: -100px;
-  animation-delay: 1s;
-}
-
-.shooting-star:nth-child(3) {
-  top: 50%;
-  left: -100px;
-  animation-delay: 2s;
+  box-shadow: 10vw 10vh white, 20vw 30vh white, 40vw 50vh white,
+              60vw 20vh white, 80vw 70vh white;
+  animation: twinkle 5s infinite;
 }
 
 @keyframes twinkle {
-  0%,
-  100% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 0.4;
-  }
+  0%,100% {opacity: 0.8;}
+  50% {opacity: 0.3;}
 }
-
-@keyframes shoot {
-  0% {
-    transform: translateX(0) translateY(0) rotate(25deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(120vw) translateY(50vh) rotate(25deg);
-    opacity: 0;
-  }
-}
-
-/* Additional twinkling stars with different animation timing */
-.stars::after {
-  content: "";
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  background: white;
-  box-shadow: 8vw 12vh 2px white, 16vw 18vh 1px white, 24vw 25vh 2px white,
-    33vw 15vh 1px white, 41vw 28vh 2px white, 49vw 35vh 1px white,
-    57vw 22vh 2px white, 65vw 42vh 1px white, 73vw 28vh 2px white,
-    81vw 48vh 1px white, 89vw 32vh 2px white, 97vw 45vh 1px white,
-    3vw 68vh 2px white, 11vw 75vh 1px white, 19vw 82vh 2px white,
-    27vw 88vh 1px white, 35vw 72vh 2px white, 43vw 85vh 1px white,
-    51vw 92vh 2px white, 59vw 78vh 1px white;
-  animation: twinkle 6s infinite linear reverse;
-}
-  </style>
+</style>
 </head>
 
 <body>
-    <div class="stars"></div>
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
 
-  <div class="container">
-    <h2>Attendance Calculator</h2>
+<div class="stars"></div>
 
-    <input type="number" id="total" placeholder="Total Lectures"><br>
-    <input type="number" id="attended" placeholder="Lectures Attended"><br>
-    <input type="number" id="required" placeholder="Required % (e.g. 75)"><br>
+<div class="container">
+  <h2>📊 Attendance Calculator</h2>
 
-    <button onclick="calculate()">Calculate</button>
+  <input type="number" id="total" placeholder="Total Lectures">
+  <input type="number" id="attended" placeholder="Lectures Attended">
+  <input type="number" id="required" placeholder="Required % (75)">
 
-    <div id="result"></div>
-  </div>
+  <button onclick="calculate()">Calculate</button>
 
-  <script>
-    function calculate() {
+  <div id="result"></div>
+</div>
 
-      var T = Number(document.getElementById("total").value);
-      var A = Number(document.getElementById("attended").value);
-      var P = Number(document.getElementById("required").value);
+<script>
+function calculate() {
 
-      var result = document.getElementById("result");
+  var T = Number(document.getElementById("total").value);
+  var A = Number(document.getElementById("attended").value);
+  var P = Number(document.getElementById("required").value);
 
-      console.log("Total:", T);
-      console.log("Attended:", A);
-      console.log("Required %:", P);
+  var result = document.getElementById("result");
 
-      if (T <= 0 || A < 0 || P <= 0) {
-        alert("Please enter valid values!");
-        result.innerHTML = "Invalid input!";
-        return;
+  if (T <= 0 || A < 0 || P <= 0) {
+    result.innerHTML = "⚠️ Enter valid values!";
+    return;
+  }
+
+  var current = (A / T) * 100;
+  var message = "";
+
+  if (current >= P) {
+    message = "😎 You are safe!";
+  } else {
+
+    // Max possible attendance if you attend all remaining classes
+    var maxPossible = ((A + (T - A)) / (T + (T - A))) * 100;
+
+    if (maxPossible < P) {
+      message = "😔 You can't reach the required attendance. Better luck next time!";
+    } else {
+      var extra = 0;
+
+      while ((A / T) * 100 < P) {
+        A++;
+        T++;
+        extra++;
       }
 
-      var current = (A / T) * 100;
-      console.log("Current Attendance:", current);
-
-      var message = "";
-
-      if (current >= P) {
-        message = "You are already safe 😎";
-        alert(message);
-      } else {
-        var extraClasses = 0;
-
-        while ((A / T) * 100 < P) {
-          A++;
-          T++;
-          extraClasses++;
-        }
-
-        console.log("Extra classes needed:", extraClasses);
-
-        message = "You need to attend " + extraClasses + " more lectures.";
-        alert(message);
-      }
-
-      result.innerHTML =
-        "Current Attendance: " + current.toFixed(2) + "%<br>" +
-        message;
+      message = "📚 Attend " + extra + " more lectures.";
     }
-  </script>
+  }
+
+  result.innerHTML =
+    "Current: " + current.toFixed(2) + "%<br>" + message;
+}
+</script>
 
 </body>
 </html>
