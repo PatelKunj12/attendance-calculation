@@ -193,10 +193,20 @@ function calculate() {
       A++;
       T++;
       extra++;
-    } else {
+    }
 
     message = "📚 Attend " + extra + " more lectures.";
   }
+  document.querySelectorAll("input").forEach(input => {
+  input.addEventListener("input", () => {
+    document.getElementById("result").innerHTML = "";
+  });
+});
+if (current >= P) {
+  result.style.border = "1px solid #00ff99"; // green
+} else {
+  result.style.border = "1px solid #ff4d4d"; // red
+}
 
   result.innerHTML =
     "Current: " + current.toFixed(2) + "%<br>" + message;
